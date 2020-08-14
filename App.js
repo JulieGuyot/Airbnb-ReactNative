@@ -131,7 +131,7 @@ export default function App() {
                   options={{
                     tabBarLabel: "Around me",
                     tabBarIcon: ({ color, size }) => (
-                      <FontAwesome name="map-marker" size={24} color="black" />
+                      <FontAwesome name="map-marker" size={24} color="grey" />
                     ),
                   }}
                 >

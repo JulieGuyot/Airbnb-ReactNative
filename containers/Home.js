@@ -6,11 +6,12 @@ import {
   Text,
   FlatList,
   ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Stars from "../components/Stars";
 
 const Home = () => {
   const navigation = useNavigation();
@@ -35,6 +36,7 @@ const Home = () => {
     <ActivityIndicator size="large" color="#F2485B" style={{ flex: 1 }} />
   ) : (
     <View style={styles.container}>
+      <Text style={styles.monairbnb}>MonAirbnb</Text>
       <FlatList
         data={data}
         keyExtractor={(item) => {
@@ -49,26 +51,38 @@ const Home = () => {
               }}
             >
               <Image
-                style={{ height: 170, resizeMode: "cover" }}
+                style={{ height: 200, resizeMode: "cover" }}
                 source={{ uri: item.photos[0] }}
               />
               <Text style={styles.itemPrice}>{item.price} €</Text>
               <View style={styles.itemDetails}>
-                <Text style={styles.itemTitle}>{item.title}</Text>
-                <Text style={styles.itemReviews}>{item.reviews} avis</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <ScrollView horizontal={true}>
+                    <View>
+                      <Text style={styles.itemTitle}>{item.title}</Text>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <Stars rating={item.ratingValue} />
+                        <Text style={styles.itemReviews}>
+                          {item.reviews} avis
+                        </Text>
+                      </View>
+                    </View>
+                  </ScrollView>
+
+                  <Image
+                    style={{
+                      height: 60,
+                      width: 60,
+                      borderRadius: 30,
+                      resizeMode: "contain",
+                      marginLeft: 10,
+                    }}
+                    source={{ uri: item.user.account.photos[0] }}
+                  />
+                </View>
               </View>
-              <Image
-                style={{
-                  height: 60,
-                  width: 60,
-                  borderRadius: 30,
-                  resizeMode: "contain",
-                  position: "absolute",
-                  left: 250,
-                  bottom: 30,
-                }}
-                source={{ uri: item.user.account.photos[0] }}
-              />
             </TouchableOpacity>
           );
         }}
@@ -82,13 +96,26 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
     alignItems: "center",
-    justifyContent: "center",
+  },
+  card: {
+    width: 330,
+  },
+
+  monairbnb: {
+    backgroundColor: "#F2485B",
+    width: "120%",
+    textAlign: "center",
+    marginBottom: 30,
+    color: "white",
+    paddingTop: 30,
+    paddingBottom: 20,
+    fontSize: 20,
   },
   itemPrice: {
     position: "absolute",
-    top: 120,
+    top: 150,
     color: "white",
     backgroundColor: "black",
     padding: 10,
@@ -102,6 +129,12 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   itemTitle: {
+    width: 330,
+    fontSize: 18,
     paddingRight: 70,
+    marginBottom: 10,
+  },
+  itemReviews: {
+    color: "grey",
   },
 });

@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   title: {
     color: "white",
     fontSize: 30,
-    marginTop: 10,
+    marginTop: 20,
     marginLeft: 12,
     textAlign: "center",
     marginBottom: 30,
@@ -151,6 +151,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     width: 300,
+    paddingLeft: 5,
     borderBottomColor: "white",
     borderBottomWidth: 1,
     lineHeight: 30,
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   inputArea: {
-    height: 100,
+    height: 140,
     width: 300,
     borderColor: "white",
     borderWidth: 1,
@@ -194,5 +195,7 @@ const styles = StyleSheet.create({
   linkToLoginText: {
     color: "white",
     textDecorationLine: "underline",
+    marginTop: 10,
+    paddingBottom: 40,
   },
 });

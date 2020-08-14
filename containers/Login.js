@@ -132,5 +132,7 @@ const styles = StyleSheet.create({
   linkToSignUpText: {
     color: "white",
     textDecorationLine: "underline",
+    marginTop: 10,
+    paddingBottom: 40,
   },
 });

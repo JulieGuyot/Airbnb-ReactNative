@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Text, Image, View, ActivityIndicator, StyleSheet } from "react-native";
+import {
+  Text,
+  Image,
+  View,
+  ActivityIndicator,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
 
 import axios from "axios";
 import MapView from "react-native-maps";
-
+import Stars from "../components/Stars";
 export default function Room({ route }) {
   const { infos } = route.params;
   const [data, setData] = useState([]);
@@ -26,43 +33,47 @@ export default function Room({ route }) {
   return isLoading ? (
     <ActivityIndicator size="large" color="#F2485B" style={{ flex: 1 }} />
   ) : (
-    <View>
-      <Image
-        style={{ height: 180, resizeMode: "cover" }}
-        source={{ uri: data.photos[0] }}
-      />
-
-      <Text style={styles.price}>{data.price} €</Text>
+    <ScrollView>
       <View>
-        <Text style={styles.title}>{data.title}</Text>
-        <Text style={styles.reviews}>{data.reviews} avis</Text>
-
         <Image
-          style={styles.imageUser}
-          source={{ uri: data.user.account.photos[0] }}
+          style={{ height: 180, resizeMode: "cover" }}
+          source={{ uri: data.photos[0] }}
         />
-      </View>
-      <Text style={styles.description}>{data.description}</Text>
-      <MapView
-        initialRegion={{
-          latitude: data.loc[1],
-          longitude: data.loc[0],
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
-        }}
-        style={{ height: 300, width: "100%" }}
-      >
-        <MapView.Marker
-          key={data._id}
-          coordinate={{
+
+        <Text style={styles.price}>{data.price} €</Text>
+        <View>
+          <Text style={styles.title}>{data.title}</Text>
+          <View style={{ flexDirection: "row", marginLeft: 10 }}>
+            <Stars rating={data.ratingValue} />
+            <Text style={styles.reviews}>{data.reviews} avis</Text>
+          </View>
+          <Image
+            style={styles.imageUser}
+            source={{ uri: data.user.account.photos[0] }}
+          />
+        </View>
+        <Text style={styles.description}>{data.description}</Text>
+        <MapView
+          initialRegion={{
             latitude: data.loc[1],
             longitude: data.loc[0],
+            latitudeDelta: 0.1,
+            longitudeDelta: 0.1,
           }}
-          title={data.title}
-          description={data.description}
-        />
-      </MapView>
-    </View>
+          style={{ height: 300, width: "100%" }}
+        >
+          <MapView.Marker
+            key={data._id}
+            coordinate={{
+              latitude: data.loc[1],
+              longitude: data.loc[0],
+            }}
+            title={data.title}
+            description={data.description}
+          />
+        </MapView>
+      </View>
+    </ScrollView>
   );
 }
 
@@ -70,6 +81,7 @@ const styles = StyleSheet.create({
   price: {
     position: "absolute",
     top: 120,
+    fontSize: 18,
     color: "white",
     backgroundColor: "black",
     padding: 10,
@@ -83,22 +95,23 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     marginLeft: 10,
     width: 280,
     marginTop: 10,
+    marginBottom: 10,
   },
   reviews: {
     marginLeft: 10,
-    fontSize: 14,
+    fontSize: 1,
     color: "grey",
-    marginTop: 10,
   },
   description: {
     marginLeft: 10,
     width: 350,
+    fontSize: 15,
     marginBottom: 30,
-    marginTop: 10,
+    marginTop: 20,
     textAlign: "justify",
   },
 });
